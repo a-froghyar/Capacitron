@@ -62,7 +62,7 @@ TEST_PATH.mkdir(parents=True, exist_ok=True)
 CURRENT_TEST_PATH.mkdir(parents=True, exist_ok=True)
 
 # model paths
-TTS_MODEL = join(r'/Users/adamfroghyar/Models/Blizzard/', RUN_NAME, 'checkpoint_70000.pth.tar')
+TTS_MODEL = join(r'/Users/adamfroghyar/Models/Blizzard/', RUN_NAME, 'checkpoint_80000.pth.tar')
 TTS_CONFIG = join(r'/Users/adamfroghyar/Models/Blizzard/', RUN_NAME, 'config.json')
 VOCODER_MODEL = "/Users/adamfroghyar/Models/BlizzardVocoder/HiFiGAN/checkpoint_770000.pth.tar"
 VOCODER_CONFIG = "/Users/adamfroghyar/Models/BlizzardVocoder/HiFiGAN/config.json"
@@ -126,9 +126,9 @@ sentences = [
     "She had a habit of taking showers in lemonade."
 ]
 
-single_sentence = "Reality is the sum or aggregate of all that is real or existent within a system, as opposed to that which is only imaginary."
+single_sentence = "And the reason why that's correct is that the MLP takes not only the LSTM as input but also the text summary embedding, which is actually hardcoded to be 128 dimensions, so it essentially takes all that information and compresses it down into the actual final reference embedding."
 
-SAMPLE_FROM = 'posterior' # 'prior' or 'posterior'
+SAMPLE_FROM = 'prior' # 'prior' or 'posterior'
 TEXT = 'single_sentence' # 'same_text' or 'sentences' or 'single_sentence'
 TXT_DEPENDENCY = True
 
