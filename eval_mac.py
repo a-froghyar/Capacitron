@@ -54,7 +54,7 @@ use_cuda = False
 
 now = datetime.datetime.now()
 
-RUN_NAME = '300_128'
+RUN_NAME = 'C=150-E=128'
 TEST_PATH = Path(join(r'/Users/adamfroghyar/Models/Blizzard/', RUN_NAME, 'TESTING'))
 CURRENT_TEST_PATH = Path(join(TEST_PATH, now.strftime("%Y-%m-%d %H:%M:%S")))
 TEST_PATH.mkdir(parents=True, exist_ok=True)
@@ -62,14 +62,14 @@ TEST_PATH.mkdir(parents=True, exist_ok=True)
 CURRENT_TEST_PATH.mkdir(parents=True, exist_ok=True)
 
 # model paths
-TTS_MODEL = join(r'/Users/adamfroghyar/Models/Blizzard', RUN_NAME, 'best_model.pth.tar')
-TTS_CONFIG = join(r'/Users/adamfroghyar/Models/Blizzard', RUN_NAME, 'config.json')
-VOCODER_MODEL = "/Users/adamfroghyar/Models/BlizzardVocoder/WaveGrad/best_model.pth.tar"
-VOCODER_CONFIG = "/Users/adamfroghyar/Models/BlizzardVocoder/WaveGrad/config.json"
+TTS_MODEL = join(r'/Users/adamfroghyar/Models/Blizzard/', RUN_NAME, 'checkpoint_70000.pth.tar')
+TTS_CONFIG = join(r'/Users/adamfroghyar/Models/Blizzard/', RUN_NAME, 'config.json')
+VOCODER_MODEL = "/Users/adamfroghyar/Models/BlizzardVocoder/HiFiGAN/checkpoint_770000.pth.tar"
+VOCODER_CONFIG = "/Users/adamfroghyar/Models/BlizzardVocoder/HiFiGAN/config.json"
 
 # load configs
 TTS_CONFIG = load_config(TTS_CONFIG)
-# VOCODER_CONFIG = load_config(VOCODER_CONFIG)
+VOCODER_CONFIG = load_config(VOCODER_CONFIG)
 
 # load the audio processor
 # TTS_CONFIG.audio['stats_path'] = join(r'/home/big-boy/Models/Blizzard', 'blizzard-gts-March-17-2021_03+34PM-b4248b0', 'scale_stats.npy')
@@ -101,15 +101,15 @@ if 'r' in cp:
 
 ''' VOCODER '''
 # LOAD VOCODER MODEL
-# vocoder_model = setup_generator(VOCODER_CONFIG)
-# vocoder_model.load_state_dict(torch.load(VOCODER_MODEL, map_location="cpu")["model"])
-# vocoder_model.remove_weight_norm()
-# vocoder_model.inference_padding = 0
+vocoder_model = setup_generator(VOCODER_CONFIG)
+vocoder_model.load_state_dict(torch.load(VOCODER_MODEL, map_location="cpu")["model"])
+vocoder_model.remove_weight_norm()
+vocoder_model.inference_padding = 0
 
-# ap_vocoder = AudioProcessor(**VOCODER_CONFIG['audio'])
-# if use_cuda:
-#     vocoder_model.cuda()
-# vocoder_model.eval()
+ap_vocoder = AudioProcessor(**VOCODER_CONFIG['audio'])
+if use_cuda:
+    vocoder_model.cuda()
+vocoder_model.eval()
 
 sentences = [
     "Sixty-Four comes asking for bread.",
@@ -157,7 +157,7 @@ for row in reference_df.iterrows():
         TTS_CONFIG,
         use_cuda,
         ap,
-        use_gl=True,
+        use_gl=False,
         figures=True,
         reference_info=refs,
         style_wav=reference_path
@@ -166,5 +166,5 @@ for row in reference_df.iterrows():
     file_handle = 'Prior' if (SAMPLE_FROM == 'prior') else 'Posterior'
     file_id = _id if TEXT == 'single_sentence' or TEXT == 'same_text' and SAMPLE_FROM != 'prior' else i
 
-    ap.save_wav(wav, join(CURRENT_TEST_PATH, 'GMM_{}_{}.wav'.format(file_handle, file_id)))
+    ap.save_wav(wav.numpy(), join(CURRENT_TEST_PATH, 'GMM_{}_{}.wav'.format(file_handle, file_id)))
 
