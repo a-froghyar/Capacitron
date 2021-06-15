@@ -791,6 +791,8 @@ def main(args):  # pylint: disable=redefined-outer-name
             # optimizer restore
             print(" > Restoring Optimizer...")
             optimizer.load_state_dict(checkpoint["optimizer"])
+            if c.use_capacitron:
+                optimizer_SGD.load_state_dict(checkpoint["optimizer_SGD"])
             if "scaler" in checkpoint and c.mixed_precision:
                 print(" > Restoring AMP Scaler...")
                 scaler.load_state_dict(checkpoint["scaler"])

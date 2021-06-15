@@ -306,12 +306,12 @@ class Tacotron(TacotronAbstract):
     @torch.no_grad()
     def inference(self, characters, speaker_ids=None, style_mel=None, reference_mel=None, reference_text=None, speaker_embeddings=None):
         inputs = self.embedding(characters)
+        encoder_outputs = self.encoder(inputs)
         if reference_text is not None:
             reference_text_embedding = self.embedding(reference_text)
             reference_text_length = torch.tensor([reference_text_embedding.size(1)], dtype=torch.int64) # pylint: disable=not-callable
-        reference_mel_length = torch.tensor([reference_mel.size(1)], dtype=torch.int64) if reference_mel is not None else None # pylint: disable=not-callable
+        reference_mel_length = torch.tensor([reference_mel.size(1)], dtype=torch.int64).to(encoder_outputs.device) if reference_mel is not None else None # pylint: disable=not-callable
 
-        encoder_outputs = self.encoder(inputs)
         if self.gst:
             # B x gst_dim
             encoder_outputs = self.compute_gst(
