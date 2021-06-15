@@ -1,8 +1,7 @@
 {
     "github_branch":"* dev",
-    "restore_path":"../convert-HiFi-GAN-checkpoint/checkpoint-converted/checkpoint_430000.pth.tar",
-        "run_name": "hifigan-blizzard-fine-tuning-with-optimizer-and-scheduler",
-        "run_description": "hifigan continue train after conversion",
+        "run_name": "hifigan-blizzard-fine-tuning",
+        "run_description": "hifigan fine tune",
     
         // AUDIO PARAMETERS
         "audio":{
@@ -20,7 +19,7 @@
             "power": 1.5,           // value to sharpen wav signals after GL algorithm.
             "griffin_lim_iters": 60,// #griffin-lim iterations. 30-60 is a good range. Larger the value, slower the generation.
             "log_func": "np.log10",
-            // "do_sound_norm": true,
+            "do_sound_norm": true,
             "stft_pad_mode": "reflect",
             // Normalization parameters
             "signal_norm": true,    // normalize the spec values in range [0, 1]
@@ -30,7 +29,7 @@
             "mel_fmin": 80.0,         // minimum freq level for mel-spec. ~50 for male and ~95 for female voices. Tune for dataset!!
             "mel_fmax": 12000.0,        // maximum freq level for mel-spec. Tune for dataset!!
             "spec_gain": 20.0, 
-            "do_trim_silence": true,  // enable trimming of slience of audio as you load it. LJspeech (false), TWEB (false), Nancy (true)
+            "do_trim_silence": false,  // enable trimming of slience of audio as you load it. LJspeech (false), TWEB (false), Nancy (true)
             "trim_db": 60,          // threshold for timming silence. Set this according to your dataset.
             "stats_path": null    // DO NOT USE WITH MULTI_SPEAKER MODEL. scaler stats file computed by 'compute_statistics.py'. If it is defined, mean-std based notmalization is used and other normalization params are ignored
         },
@@ -103,11 +102,11 @@
         },
     
         // DATASET
-        "data_path": "/home/big-boy/Data/blizzard2013/segmented/EXTRACTED/wav/",
-        "feature_path": "/home/big-boy/Data/blizzard2013/segmented/EXTRACTED/mel/",
+        "data_path": "/home/big-boy/Data/blizzard2013/segmented/EXTRACTED/wav",
+        "feature_path": "/home/big-boy/Data/blizzard2013/segmented/EXTRACTED/mel",
     
         "seq_len": 8192,
-        "max_seq_len": 110,
+        // "max_seq_len": 110,
         "pad_short": 2000,
         "conv_pad": 0,
         "use_noise_augment": false,

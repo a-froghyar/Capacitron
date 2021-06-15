@@ -1,6 +1,6 @@
 {
     "model": "Tacotron",
-    "run_name": "capacitron-C=150-E=128",
+    "run_name": "capacitron-C=50-E=128",
     "run_description": "Capacitron",
 
     // AUDIO PARAMETERS
@@ -164,7 +164,7 @@
         "capacitron_VAE_embedding_dim": 128, // Used for the output of the VAE encoder's LSTM size and for the posterior/prior distributions
         "capacitron_use_text_summary_embeddings": true,
         "capacitron_text_summary_embedding_dim": 128, // size for the LSTM accounting for the text summary conditional input
-        "capacitron_capacity": 150, // capacity target
+        "capacitron_capacity": 50, // capacity target
         "capacitron_use_speaker_embedding": false,
         "capacitron_reference_wav": "/home/big-boy/Data/blizzard2013/segmented/refs/seen/BLZ76427.wav", // path to reference wav file to be used in capacitron inference.
         "capacitron_reference_text": "What does the letter mean, mother?", // string of what the file above is saying

@@ -53,13 +53,13 @@ def tts(model, text, CONFIG, use_cuda, ap, use_gl, figures=True, reference_info=
 
 
 ''' Runtime settings '''
-use_cuda = False
+use_cuda = True
 
 ''' Directory Mgmt '''
 
 now = datetime.datetime.now()
 
-RUN_NAME = 'capacitron-noPreemphasis-256-LRCompressed-May-17-2021_03+27PM-fca955c'
+RUN_NAME = 'capacitron-C=50-E=128-June-13-2021_04+18PM-53c9310'
 TEST_PATH = Path(join(r'/home/big-boy/Models/Blizzard/', RUN_NAME, 'TESTING'))
 CURRENT_TEST_PATH = Path(join(TEST_PATH, now.strftime("%Y-%m-%d %H:%M:%S")))
 TEST_PATH.mkdir(parents=True, exist_ok=True)
@@ -67,10 +67,10 @@ TEST_PATH.mkdir(parents=True, exist_ok=True)
 CURRENT_TEST_PATH.mkdir(parents=True, exist_ok=True)
 
 # model paths
-TTS_MODEL = join(r'/home/big-boy/Models/Blizzard', RUN_NAME, 'best_model.pth.tar')
+TTS_MODEL = join(r'/home/big-boy/Models/Blizzard', RUN_NAME, 'checkpoint_70000.pth.tar')
 TTS_CONFIG = join(r'/home/big-boy/Models/Blizzard', RUN_NAME, 'config.json')
-VOCODER_MODEL = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-with-optimizer-and-scheduler-May-25-2021_02+29PM-dacd6c5/best_model.pth.tar"
-VOCODER_CONFIG = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-with-optimizer-and-scheduler-May-25-2021_02+29PM-dacd6c5/config.json"
+VOCODER_MODEL = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-May-31-2021_05+55PM-53c9310/checkpoint_770000.pth.tar"
+VOCODER_CONFIG = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-May-31-2021_05+55PM-53c9310/config.json"
 
 # load configs
 TTS_CONFIG = load_config(TTS_CONFIG)
@@ -118,20 +118,6 @@ if use_cuda:
     vocoder_model.cuda()
 vocoder_model.eval()
 
-# WAVEGRAD LOADING
-
-# vocoder_model = setup_generator(VOCODER_CONFIG)
-# cp = torch.load(VOCODER_MODEL, map_location="cpu")["model"]
-# vocoder_model.load_state_dict(cp)
-# scale_factor = [1, VOCODER_CONFIG['audio']['sample_rate'] / ap.sample_rate]
-# print(f"scale_factor: {scale_factor}")
-# ap_vocoder = AudioProcessor(**VOCODER_CONFIG['audio'])
-# if use_cuda:
-#     vocoder_model.cuda()
-# vocoder_model.eval()
-# vocoder_model.compute_noise_level(np.linspace(1e-6, 1e-2, 50)) #compute_noise_level(50, 1e-6, 1e-2)
-
-
 sentences = [
     "Sixty-Four comes asking for bread.",
     "Two seats were vacant.",
@@ -147,7 +133,7 @@ sentences = [
     "She had a habit of taking showers in lemonade."
 ]
 
-single_sentence = "That should actually be a quick fix to fix."
+single_sentence = "Hello Nam and Sandra, thank you so much for letting me stay over!"
 
 SAMPLE_FROM = 'prior' # 'prior' or 'posterior'
 TEXT = 'single_sentence' # 'same_text' or 'sentences' or 'single_sentence'
