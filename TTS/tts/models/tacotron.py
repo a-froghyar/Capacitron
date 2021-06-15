@@ -265,6 +265,8 @@ class Tacotron(TacotronAbstract):
             postnet_outputs = postnet_outputs * output_mask.unsqueeze(2).expand_as(postnet_outputs)
         # B x T_out x posnet_dim
         postnet_outputs = self.last_linear(postnet_outputs)
+        # last_linear converts 0 values to nonzero so masking again
+        postnet_outputs = postnet_outputs * output_mask.unsqueeze(2).expand_as(postnet_outputs)
         # B x T_out x decoder_in_features
         decoder_outputs = decoder_outputs.transpose(1, 2).contiguous()
         if self.bidirectional_decoder:
