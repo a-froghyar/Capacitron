@@ -59,7 +59,7 @@ use_cuda = True
 
 now = datetime.datetime.now()
 
-RUN_NAME = 'capacitron-C=50-E=128-June-13-2021_04+18PM-53c9310'
+RUN_NAME = 'capacitron-IAF-trial-July-02-2021_04+08PM-7eea6c5'
 TEST_PATH = Path(join(r'/home/big-boy/Models/Blizzard/', RUN_NAME, 'TESTING'))
 CURRENT_TEST_PATH = Path(join(TEST_PATH, now.strftime("%Y-%m-%d %H:%M:%S")))
 TEST_PATH.mkdir(parents=True, exist_ok=True)
@@ -67,9 +67,9 @@ TEST_PATH.mkdir(parents=True, exist_ok=True)
 CURRENT_TEST_PATH.mkdir(parents=True, exist_ok=True)
 
 # model paths
-TTS_MODEL = join(r'/home/big-boy/Models/Blizzard', RUN_NAME, 'checkpoint_70000.pth.tar')
+TTS_MODEL = join(r'/home/big-boy/Models/Blizzard', RUN_NAME, 'checkpoint_35000.pth.tar')
 TTS_CONFIG = join(r'/home/big-boy/Models/Blizzard', RUN_NAME, 'config.json')
-VOCODER_MODEL = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-May-31-2021_05+55PM-53c9310/checkpoint_770000.pth.tar"
+VOCODER_MODEL = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-May-31-2021_05+55PM-53c9310/checkpoint_810000.pth.tar"
 VOCODER_CONFIG = "/home/big-boy/Models/BlizzardVocoder/hifigan-blizzard-fine-tuning-May-31-2021_05+55PM-53c9310/config.json"
 
 # load configs
@@ -135,8 +135,8 @@ sentences = [
 
 single_sentence = "Hello Nam and Sandra, thank you so much for letting me stay over!"
 
-SAMPLE_FROM = 'prior' # 'prior' or 'posterior'
-TEXT = 'single_sentence' # 'same_text' or 'sentences' or 'single_sentence'
+SAMPLE_FROM = 'posterior' # 'prior' or 'posterior'
+TEXT = 'same_text' # 'same_text' or 'sentences' or 'single_sentence'
 TXT_DEPENDENCY = True
 
 ''' Run Inference '''

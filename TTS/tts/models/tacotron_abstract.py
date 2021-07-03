@@ -230,12 +230,12 @@ class TacotronAbstract(ABC, nn.Module):
 
     def compute_VAE_embedding(self, inputs, reference_mel_info, text_info=None, speaker_embedding=None):
         """ Capacitron Variational Autoencoder  """
-        VAE_outputs, posterior_distribution, prior_distribution, capacitron_beta = self.capacitron_layer(reference_mel_info, # pylint: disable=not-callable
-                                                                                                         text_info,
-                                                                                                         speaker_embedding)
+        VAE_outputs, posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term = self.capacitron_layer(reference_mel_info, # pylint: disable=not-callable
+                                                                                                                      text_info,
+                                                                                                                      speaker_embedding)
         VAE_outputs = VAE_outputs.to(inputs.device)
         encoder_output = self._concat_speaker_embedding(inputs, VAE_outputs) # concatenate to the output of the basic tacotron encoder
-        return encoder_output, posterior_distribution, prior_distribution, capacitron_beta
+        return encoder_output, posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term
 
     @staticmethod
     def _add_speaker_embedding(outputs, speaker_embeddings):

@@ -235,7 +235,7 @@ class Tacotron(TacotronAbstract):
         # capacitron
         if self.capacitron:
             # B x capacitron_VAE_embedding_dim
-            encoder_outputs, posterior_distribution, prior_distribution, capacitron_beta = \
+            encoder_outputs, posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term = \
                 self.compute_VAE_embedding(
                     encoder_outputs,
                     reference_mel_info=[mel_specs, mel_lengths],
@@ -299,7 +299,8 @@ class Tacotron(TacotronAbstract):
                 stop_tokens,
                 posterior_distribution,
                 prior_distribution,
-                capacitron_beta
+                capacitron_beta,
+                iaf_kl_term
             )
         return decoder_outputs, postnet_outputs, alignments, stop_tokens
 
@@ -321,7 +322,7 @@ class Tacotron(TacotronAbstract):
             )
         if self.capacitron:
             # B x capacitron_VAE_embedding_dim
-            encoder_outputs, _, _, _ = self.compute_VAE_embedding(
+            encoder_outputs, *_ = self.compute_VAE_embedding(
                 encoder_outputs,
                 reference_mel_info=[reference_mel, reference_mel_length] if reference_mel is not None else None,
                 text_info=[reference_text_embedding, reference_text_length] if reference_text is not None else None,

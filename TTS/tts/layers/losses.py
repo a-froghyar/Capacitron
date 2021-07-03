@@ -428,7 +428,7 @@ class CapacitronLoss(torch.nn.Module):
     def forward(self, postnet_output, decoder_output, mel_input, linear_input,
                 stopnet_output, stopnet_target, output_lens, decoder_b_output,
                 alignments, alignment_lens, alignments_backwards, input_lens,
-                capacity, posterior_distribution, prior_distribution, beta):
+                capacity, posterior_distribution, prior_distribution, beta, iaf_kl_term=None):
 
         # decoder outputs linear or mel spectrograms for Tacotron and Tacotron2
         # the target should be set acccordingly
@@ -453,7 +453,10 @@ class CapacitronLoss(torch.nn.Module):
                 postnet_loss = self.postnet_criterion(postnet_output, postnet_target) #/ postnet_output.size(0)
 
         # KL divergence term between the posterior and the prior
-        kl_term = torch.mean(torch.distributions.kl_divergence(posterior_distribution, prior_distribution))
+        if iaf_kl_term is not None:
+            kl_term = torch.mean(iaf_kl_term).to(beta.device)
+        else:
+            kl_term = torch.mean(torch.distributions.kl_divergence(posterior_distribution, prior_distribution))
 
         # VAE Loss: We use the l1 decoder loss as a stand-in for the negative log likelihood,
         # summed over all dimensions and normalised by the batch size
@@ -461,6 +464,10 @@ class CapacitronLoss(torch.nn.Module):
 
         # pass beta through softplus
         beta = torch.nn.functional.softplus(beta)
+
+        _lambda = torch.tensor(capacity * 0.5).to(beta.device)
+
+        kl_term = torch.max(_lambda, kl_term)
 
         # This is the term going to the main ADAM optimiser, we detach beta because
         # beta is optimised by a separate, SGD optimiser below

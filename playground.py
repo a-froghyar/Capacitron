@@ -1,7 +1,9 @@
 #%%
-import torch.nn as nn
-import torch.nn.functional as F
+
 import torch
+import torch.nn as nn
+from torch.distributions.multivariate_normal import MultivariateNormal as MVN
+import torch.nn.functional as F
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -129,3 +131,13 @@ _zeros = torch.zeros(5, 2, 1, 4)
 
 mask = torch.cat((_ones, _zeros), 2)
 print(x * mask)
+
+#%%
+
+prior = MVN(torch.zeros(128), torch.eye(128))
+posterior = MVN(torch.zeros(128), torch.eye(128))
+# kl = torch.distributions.kl_divergence(posterior, prior)
+
+sample = prior.sample()
+print(sample.shape)
+# torch.log(prior.log_prob(torch.tensor(torch.range(0, 127))))

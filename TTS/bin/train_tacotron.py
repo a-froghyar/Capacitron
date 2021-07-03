@@ -194,6 +194,7 @@ def train(data_loader, model, criterion, optimizer, optimizer_st, optimizer_SGD,
                     posterior_distribution,
                     prior_distribution,
                     capacitron_beta,
+                    iaf_kl_term
                 ) = model(
                     text_input,
                     text_lengths,
@@ -219,7 +220,7 @@ def train(data_loader, model, criterion, optimizer, optimizer_st, optimizer_SGD,
                     speaker_ids=speaker_ids,
                     speaker_embeddings=speaker_embeddings,
                 )
-                posterior_distribution, prior_distribution, capacitron_beta = None, None, None # capacitron stuff
+                posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term = None, None, None, None # capacitron stuff
             else:
                 decoder_output, postnet_output, alignments, stop_tokens = model(
                     text_input,
@@ -229,7 +230,7 @@ def train(data_loader, model, criterion, optimizer, optimizer_st, optimizer_SGD,
                     speaker_ids=speaker_ids,
                     speaker_embeddings=speaker_embeddings,
                 )
-                posterior_distribution, prior_distribution, capacitron_beta = None, None, None # capacitron stuff
+                posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term = None, None, None, None # capacitron stuff
                 decoder_backward_output = None
                 alignments_backward = None
 
@@ -259,7 +260,8 @@ def train(data_loader, model, criterion, optimizer, optimizer_st, optimizer_SGD,
                     c.capacitron['capacitron_capacity'],
                     posterior_distribution,
                     prior_distribution,
-                    capacitron_beta
+                    capacitron_beta,
+                    iaf_kl_term
                 )
             else:
                 loss_dict = criterion(
@@ -492,7 +494,8 @@ def evaluate(data_loader, model, criterion, ap, global_step, epoch):
                     stop_tokens,
                     posterior_distribution,
                     prior_distribution,
-                    capacitron_beta
+                    capacitron_beta,
+                    iaf_kl_term
                 ) = model(
                     text_input,
                     text_lengths,
@@ -517,7 +520,7 @@ def evaluate(data_loader, model, criterion, ap, global_step, epoch):
                     speaker_ids=speaker_ids,
                     speaker_embeddings=speaker_embeddings
                 )
-                posterior_distribution, prior_distribution, capacitron_beta = None, None, None # capacitron stuff
+                posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term = None, None, None, None # capacitron stuff
             else:
                 (
                     decoder_output,
@@ -531,7 +534,7 @@ def evaluate(data_loader, model, criterion, ap, global_step, epoch):
                     speaker_ids=speaker_ids,
                     speaker_embeddings=speaker_embeddings
                 )
-                posterior_distribution, prior_distribution, capacitron_beta = None, None, None # capacitron stuff
+                posterior_distribution, prior_distribution, capacitron_beta, iaf_kl_term = None, None, None, None # capacitron stuff
                 decoder_backward_output = None
                 alignments_backward = None
 
@@ -561,7 +564,8 @@ def evaluate(data_loader, model, criterion, ap, global_step, epoch):
                     c.capacitron['capacitron_capacity'],
                     posterior_distribution,
                     prior_distribution,
-                    capacitron_beta
+                    capacitron_beta,
+                    iaf_kl_term
                 )
             else:
                 loss_dict = criterion(
