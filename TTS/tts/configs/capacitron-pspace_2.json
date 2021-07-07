@@ -135,10 +135,10 @@
     // "add_silence_end_seconds": 0.25, //Nico - how much silence we add to the end of a sentence ->> sounds better when concatenating multiple synthesised utterances
 
     // PATHS
-    "output_path": "/home/big-boy/Models/Blizzard/",
+    "output_path": "/home/paperspace/Models/Blizzard/",
 
     // PHONEMES
-    "phoneme_cache_path": "/home/big-boy/Models/phoneme_cache/", // phoneme computation is slow, therefore, it caches results in the given folder.
+    "phoneme_cache_path": "/home/paperspace/phoneme_cache/", // phoneme computation is slow, therefore, it caches results in the given folder.
     "remove_punctuation_from_data": false, // Nico
     "use_phonemes": true, // use phonemes instead of raw characters. It is suggested for better pronounciation.
     "phoneme_language": "en-us", // depending on your target language, pick one from  https://github.com/bootphon/phonemizer#languages
@@ -166,8 +166,8 @@
         "capacitron_text_summary_embedding_dim": 128, // size for the LSTM accounting for the text summary conditional input
         "capacitron_capacity": 50, // capacity target
         "capacitron_use_speaker_embedding": false,
-        "capacitron_reference_wav": "/home/big-boy/Data/blizzard2013/segmented/refs/seen/BLZ76427.wav", // path to reference wav file to be used in capacitron inference.
-        "capacitron_reference_text": "What does the letter mean, mother?", // string of what the file above is saying
+        "capacitron_reference_wav": null, // path to reference wav file to be used in capacitron inference.
+        "capacitron_reference_text": null, // string of what the file above is saying
         "capacitron_SGD_lr": 1e-5,
         "capacitron_SGD_momentum": 0.9
     },
@@ -176,7 +176,7 @@
     "datasets": // List of datasets. They all merged and they get different speaker_ids.
         [{
             "name": "ljspeech",
-            "path": "/home/blizzard2013/segmented/",
+            "path": "/home/paperspace/blizzard2013/segmented/",
             "meta_file_train": "metadata.csv", // for vtck if list, ignore speakers id in list for train, its useful for test cloning with new speakers
             "meta_file_val": null
         }]
