@@ -1,6 +1,6 @@
 {
     "model": "Tacotron",
-    "run_name": "capacitron-FULL-C=300-E=128",
+    "run_name": "capacitron-FULL-C=50-E=128",
     "run_description": "Capacitron",
 
     // AUDIO PARAMETERS
