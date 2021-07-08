@@ -135,7 +135,7 @@
     // "add_silence_end_seconds": 0.25, //Nico - how much silence we add to the end of a sentence ->> sounds better when concatenating multiple synthesised utterances
 
     // PATHS
-    "output_path": "/home/ubuntu/Models/",
+    "output_path": "/data/Models/",
 
     // PHONEMES
     "phoneme_cache_path": "/data/phoneme_cache/", // phoneme computation is slow, therefore, it caches results in the given folder.
