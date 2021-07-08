@@ -45,7 +45,7 @@
     "reinit_layers": [], // give a list of layer names to restore from the given checkpoint. If not defined, it reloads all heuristically matching layers.
 
     // TRAINING
-    "batch_size": 150, // Batch size for training. Lower values than 32 might cause hard to learn attention. It is overwritten by 'gradual_training'.
+    "batch_size": 200, // Batch size for training. Lower values than 32 might cause hard to learn attention. It is overwritten by 'gradual_training'.
     "eval_batch_size": 16,
     "r": 2, // Number of decoder frames to predict per iteration. Set the initial values if gradual training is enabled.
     "gradual_training": null,
