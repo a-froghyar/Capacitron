@@ -135,10 +135,10 @@
     // "add_silence_end_seconds": 0.25, //Nico - how much silence we add to the end of a sentence ->> sounds better when concatenating multiple synthesised utterances
 
     // PATHS
-    "output_path": "/data/Models/",
+    "output_path": "/home/ubuntu/Models/",
 
     // PHONEMES
-    "phoneme_cache_path": "/data/phoneme_cache/", // phoneme computation is slow, therefore, it caches results in the given folder.
+    "phoneme_cache_path": "/home/ubuntu/phoneme_cache/", // phoneme computation is slow, therefore, it caches results in the given folder.
     "remove_punctuation_from_data": false, // Nico
     "use_phonemes": true, // use phonemes instead of raw characters. It is suggested for better pronounciation.
     "phoneme_language": "en-us", // depending on your target language, pick one from  https://github.com/bootphon/phonemizer#languages
@@ -176,7 +176,7 @@
     "datasets": // List of datasets. They all merged and they get different speaker_ids.
         [{
             "name": "ljspeech",
-            "path": "/data/blizzard2013/segmented/",
+            "path": "/home/ubuntu/data/",
             "meta_file_train": "metadata.csv", // for vtck if list, ignore speakers id in list for train, its useful for test cloning with new speakers
             "meta_file_val": null
         }]

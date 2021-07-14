@@ -22,8 +22,8 @@ class CapacitronVAE(nn.Module):
         self.encoder = ReferenceEncoder(num_mel, out_dim=reference_encoder_out_dim)
 
         # Init beta, the lagrange-like term for the KL distribution
-        # self.beta = torch.nn.Parameter(torch.log(torch.exp(torch.Tensor([1.0])) - 1), requires_grad=True)
-        self.beta = torch.tensor(0.0001)
+        self.beta = torch.nn.Parameter(torch.log(torch.exp(torch.Tensor([1.0])) - 1), requires_grad=True)
+        # self.beta = torch.tensor(0.0001)
         mlp_input_dimension = reference_encoder_out_dim
 
         if text_summary_embedding_dim is not None:
