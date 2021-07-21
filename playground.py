@@ -12,25 +12,25 @@ meta_dir = '/home/big-boy/Data/blizzard2013/segmented/metadata.csv'
 
 df = pd.read_csv(Path(meta_dir), header=None, names=['ID', 'Text', 'T'], sep="|", delimiter=None)
 df.drop(['T'], axis=1, inplace=True)
-random_df = df.sample(n=42)
+random_df = df.sample(n=80)
 print([len(t) for t in random_df['Text']])
 random_df.head()
 
 # %%
 for i in random_df['ID']:
     to_copy = Path('/home/big-boy/Data/blizzard2013/segmented/wavs/' + i + '.wav')
-    destination = Path('/home/big-boy/Data/blizzard2013/segmented/refs/seen_new/' + i + '.wav')
+    destination = Path('/home/big-boy/Data/blizzard2013/segmented/refs/seen_new_new_new/' + i + '.wav')
     # to_copy = Path('/home/big-boy/Data/LJSpeech-1.1//wavs/' + i + '.wav')
     # destination = Path('/home/big-boy/Data/LJSpeech-1.1/refs/seen/' + i + '.wav')
     copyfile(to_copy, destination)
 
 #%%
 random_df['data'] = random_df[['ID', 'Text']].agg(lambda x: "|".join(map(str, x)), axis=1)
-random_df['data'].to_csv(Path('/home/big-boy/Data/blizzard2013/segmented/refs/seen_new/metadata.csv'), sep='\n', header=None, index=False)
+random_df['data'].to_csv(Path('/home/big-boy/Data/blizzard2013/segmented/refs/seen_new_new_new/metadata.csv'), sep='\n', header=None, index=False)
 
 # %%
 # Read playground
-dff = pd.read_csv(Path('/home/big-boy/Data/blizzard2013/segmented/refs/seen_new/metadata.csv'), header=None, names=['ID', 'Text'], sep='|', delimiter=None)
+dff = pd.read_csv(Path('/home/big-boy/Data/blizzard2013/segmented/refs/seen_new_new/metadata.csv'), header=None, names=['ID', 'Text'], sep='|', delimiter=None)
 
 for row in dff.iterrows():
     print(row[0])
